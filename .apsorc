@@ -1,0 +1,287 @@
+{
+  "entities": [
+    {
+      "name": "Course",
+      "created_at": true,
+      "updated_at": true,
+      "fields": [
+        {
+          "name": "title",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": true
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "start_date",
+          "type": "date",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "end_date",
+          "type": "date",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "status",
+          "type": "varchar",
+          "nullable": false,
+          "values": [
+            "active",
+            "inactive",
+            "completed"
+          ],
+          "isIndex": false,
+          "isUnique": true
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "title"
+          ],
+          "unique": true
+        }
+      ],
+      "uniques": [
+        {
+          "fields": [
+            "title"
+          ],
+          "name": "unique_course_title"
+        }
+      ]
+    },
+    {
+      "name": "Student",
+      "created_at": true,
+      "updated_at": true,
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "last_name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "email",
+          "type": "varchar",
+          "nullable": false,
+          "isUnique": true,
+          "isIndex": true
+        },
+        {
+          "name": "enrollment_date",
+          "type": "date",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "email"
+          ],
+          "unique": true
+        }
+      ],
+      "uniques": [
+        {
+          "fields": [
+            "email"
+          ],
+          "name": "unique_student_email"
+        }
+      ]
+    },
+    {
+      "name": "Instructor",
+      "created_at": true,
+      "updated_at": true,
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "last_name",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        },
+        {
+          "name": "email",
+          "type": "varchar",
+          "nullable": false,
+          "isUnique": true,
+          "isIndex": true
+        },
+        {
+          "name": "hire_date",
+          "type": "date",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "email"
+          ],
+          "unique": true
+        }
+      ],
+      "uniques": [
+        {
+          "fields": [
+            "email"
+          ],
+          "name": "unique_instructor_email"
+        }
+      ]
+    },
+    {
+      "name": "Assignment",
+      "created_at": true,
+      "updated_at": true,
+      "fields": [
+        {
+          "name": "title",
+          "type": "varchar",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "nullable": true,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "due_date",
+          "type": "date",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": false
+        },
+        {
+          "name": "status",
+          "type": "varchar",
+          "nullable": false,
+          "values": [
+            "pending",
+            "submitted",
+            "graded"
+          ],
+          "isIndex": false,
+          "isUnique": false
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "title"
+          ],
+          "unique": false
+        }
+      ],
+      "uniques": []
+    },
+    {
+      "name": "Enrollment",
+      "created_at": true,
+      "updated_at": true,
+      "fields": [
+        {
+          "name": "student_id",
+          "type": "uuid",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": true
+        },
+        {
+          "name": "course_id",
+          "type": "uuid",
+          "nullable": false,
+          "isIndex": true,
+          "isUnique": true
+        },
+        {
+          "name": "enrollment_date",
+          "type": "date",
+          "nullable": false,
+          "isIndex": false,
+          "isUnique": true
+        }
+      ],
+      "indexes": [
+        {
+          "fields": [
+            "student_id",
+            "course_id"
+          ],
+          "unique": true
+        }
+      ],
+      "uniques": [
+        {
+          "fields": [
+            "student_id",
+            "course_id"
+          ],
+          "name": "unique_enrollment"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from": "Course",
+      "to": "Assignment",
+      "type": "OneToMany"
+    },
+    {
+      "from": "Student",
+      "to": "Enrollment",
+      "type": "OneToMany"
+    },
+    {
+      "from": "Course",
+      "to": "Enrollment",
+      "type": "OneToMany"
+    },
+    {
+      "from": "Instructor",
+      "to": "Course",
+      "type": "OneToMany"
+    }
+  ],
+  "_removedEntities": []
+}
